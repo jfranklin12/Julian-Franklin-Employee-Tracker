@@ -5,13 +5,13 @@ USE company_db;
 
 CREATE TABLE deparment(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(30)
+    deparment_name VARCHAR(30)
 );
 
-CREATE TABLE role(
+CREATE TABLE employee_role(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(30),
-    salary DECIMAL,
+    salary DECIMAL(10,2),
     deparment_id INT
     FOREIGN KEY (deparment_id)
     REFERENCES deparment(id)
@@ -26,5 +26,8 @@ CREATE TABLE employee(
     manager_id INT
     FOREIGN KEY (role_id)
     REFERENCES role(id)
+    ON DELETE SET NULL
+    FOREIGN KEY (manager_id)
+    REFERENCES employee(id)
     ON DELETE SET NULL
 );
