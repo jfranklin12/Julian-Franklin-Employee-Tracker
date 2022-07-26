@@ -1,8 +1,8 @@
 INSERT INTO deparment (deparment_name)
-VALUES (Engineering),
-       (Finance),
-       (Legal),
-       (Sales);
+VALUES ('Engineering'),
+       ('Finance'),
+       ('Legal'),
+       ('Sales');
 
 INSERT INTO employee_role (title, salary, deparment_id)
 VALUES ("Sales Lead", 100000, 4),
@@ -19,7 +19,7 @@ VALUES ("Vince", "Yang", 1, NULL),
        ("Ashley", "Thompson", 2, 1),
        ("Hunter", "Padgett", 3, NULL),
        ("Mary Margaret", "Taylor", 4, 3),
-       ("Charli", "Dunlap" 5, NULL),
-       ("Teagrin", "Forde" 6, 5),
-       ("Paulo", "Sergio" 7, NULL),
-       ("William", "Summerlin" 8, 7);
+       ("Charli", "Dunlap", 5, NULL),
+       ("Teagrin", "Forde", 6, 5),
+       ("Jules", "Franklin", 7, NULL),
+       ("William", "Summerlin", 8, 7);

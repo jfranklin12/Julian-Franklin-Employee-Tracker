@@ -1,21 +1,39 @@
 const mysql = require('mysql2');
+const inquirer = require('inquirer')
 
 const PORT = process.env.PORT || 3001;
-const app = express();
-
-// Express middleware
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
 
 // Connect to database
 const db = mysql.createConnection(
   {
     host: 'localhost',
-    // MySQL username,
     user: 'root',
-    // TODO: Add MySQL password here
-    password: '',
-    database: 'movies_db'
+    password: 'root',
+    database: ''
   },
-  console.log(`Connected to the movies_db database.`)
+  console.log(`Connected to the compary_db database.`)
 );
+
+const action = [
+  {
+    type: 'list',
+    name: 'options',
+    message: 'What would you like to do?',
+    choices: ['View All Departments', 'View All Roles','View All Employees', 'Add Department', 'Add Role', 'Add Employee', 'Update Employee Role', 'Quit'],
+  }
+]
+
+function begin() {
+  inquirer
+      .prompt(action).then(choices => {
+
+        switch(options.choices){
+          case 'View All Departments':
+            
+
+        };  
+      });
+
+};
+
+begin();
