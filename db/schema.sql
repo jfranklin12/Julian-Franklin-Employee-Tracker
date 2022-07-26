@@ -11,7 +11,7 @@ CREATE TABLE deparment(
 CREATE TABLE employee_role(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(30),
-    salary DECIMAL(10,2),
+    salary DECIMAL(10,0),
     deparment_id INT,
     FOREIGN KEY (deparment_id)
     REFERENCES deparment(id)
