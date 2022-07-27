@@ -88,7 +88,7 @@ const viewAllEmployees = () => {
 // function to add employee with queries
 const addEmployee = () => {
   db.query('SELECT id AS value, title AS name FROM employee_role;', (err, role) => {
-    
+    console.log(role)
   
     const createEmployee = [
       {
@@ -124,17 +124,18 @@ const addEmployee = () => {
     inquirer
       .prompt(createEmployee).then(emp => {
         console.log(emp)
-        db.query('INSERT INTO employee SET ?, {
+        db.query
+        ('INSERT INTO employee SET ?', {
           first_name: emp.firstName,
           last_name: emp.lastName,
-          role_id:
-        }
-         (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)', [emp.firstName, emp.lastName, emp.title, emp.manager], (err, results) => {
+          role_id: emp.title,
+          manager_id: emp.manager
+        },(err, results) => {
           if (err) {
             console.log(err)
           } else {
             console.log('Successfully added employee!');
-            console.table(results)
+            console.table(viewAllEmployees())
           }
           begin();
         });
