@@ -1,8 +1,5 @@
 const mysql = require('mysql2');
 const inquirer = require('inquirer');
-const { listenerCount } = require('mysql2/typings/mysql/lib/Connection');
-
-const PORT = process.env.PORT || 3001;
 
 // Connect to database
 const db = mysql.createConnection(
@@ -85,17 +82,14 @@ const viewAllEmployees = () => {
     begin();
   });
 };
+
+
+
 // function to add employee with queries
 const addEmployee = () => {
-  const roles = [];
   db.query('SELECT id AS value, title AS name FROM employee_role;', (err, role) => {
-    console.log(role)
-    console.log(role[0].name)
-
-    for (let i = 0; i < role.length; i++) {
-      roles.push(role[i].name);
-      console.log(roles)
-    }
+    
+  
     const createEmployee = [
       {
         type: 'input',
@@ -111,21 +105,31 @@ const addEmployee = () => {
         type: 'list',
         name: 'title',
         message: 'What is their job title?',
-        // I want to call roles but it won't work
-        choices: roles,
+        choices: role,
       },
       {
         type: 'list',
         name: 'manager',
         message: 'Who is their manager?',
-        choices: ['Sales Lead',]
+        choices: [
+          {name: 'Julian Franklin', value: 7},
+          {name: 'Charli Dunlap', value: 5},
+          {name: 'Hunter Padgett', value: 3},
+          {name: 'Vince Yang', value: 1}
+        ]
       }
-
     ]
-
+    
+ 
     inquirer
       .prompt(createEmployee).then(emp => {
-        db.query('INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)', [emp.firstName, emp.lastName, emp.title, NULL], (err, results) => {
+        console.log(emp)
+        db.query('INSERT INTO employee SET ?, {
+          first_name: emp.firstName,
+          last_name: emp.lastName,
+          role_id:
+        }
+         (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)', [emp.firstName, emp.lastName, emp.title, emp.manager], (err, results) => {
           if (err) {
             console.log(err)
           } else {
@@ -134,9 +138,11 @@ const addEmployee = () => {
           }
           begin();
         });
-      });
-  });
+      });     
+    });
+  };
+ 
 
-}
+
 
 begin();
