@@ -1,5 +1,6 @@
 const mysql = require('mysql2');
-const inquirer = require('inquirer')
+const inquirer = require('inquirer');
+const { listenerCount } = require('mysql2/typings/mysql/lib/Connection');
 
 const PORT = process.env.PORT || 3001;
 
@@ -110,8 +111,15 @@ const addEmployee = () => {
         type: 'list',
         name: 'title',
         message: 'What is their job title?',
-        choice: roles,
+        // I want to call roles but it won't work
+        choices: roles,
       },
+      {
+        type: 'list',
+        name: 'manager',
+        message: 'Who is their manager?',
+        choices: ['Sales Lead',]
+      }
 
     ]
 
