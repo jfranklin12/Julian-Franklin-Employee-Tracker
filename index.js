@@ -84,10 +84,17 @@ const viewAllEmployees = () => {
     begin();
   });
 };
-
+// function to add employee with queries
 const addEmployee = () => {
-  db.query('', (err, results) => {
+  const roles = [];
+  db.query('SELECT id AS value, title AS name FROM employee_role;', (err, role) => {
+    console.log(role)
+    console.log(role[0].name)
 
+    for (let i = 0; i < role.length; i++) {
+      roles.push(role[i].name);
+      console.log(roles)
+    }
     const createEmployee = [
       {
         type: 'input',
@@ -103,10 +110,11 @@ const addEmployee = () => {
         type: 'list',
         name: 'title',
         message: 'What is their job title?',
-        choice: results,
+        choice: roles,
       },
 
     ]
+
     inquirer
       .prompt(createEmployee).then(emp => {
         db.query('INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)', [emp.firstName, emp.lastName, emp.title, NULL], (err, results) => {
