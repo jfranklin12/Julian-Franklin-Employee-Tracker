@@ -3,18 +3,18 @@ CREATE DATABASE company_db;
 
 USE company_db;
 
-CREATE TABLE deparment(
+CREATE TABLE department(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    deparment_name VARCHAR(30)
+    department_name VARCHAR(30) NOT NULL
 );
 
 CREATE TABLE employee_role(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(30),
-    salary DECIMAL(10, 0),
-    deparment_id INT,
-    FOREIGN KEY (deparment_id)
-    REFERENCES deparment(id)
+    title VARCHAR(30) NOT NULL,
+    salary DECIMAL(10, 0) NOT NULL,
+    department_id INT,
+    FOREIGN KEY (department_id)
+    REFERENCES department(id)
     ON DELETE SET NULL
 );
 
@@ -31,3 +31,5 @@ CREATE TABLE employee(
     REFERENCES employee(id)
     ON DELETE SET NULL
 );
+
+update employee
