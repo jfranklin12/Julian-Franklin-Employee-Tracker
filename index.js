@@ -37,6 +37,7 @@ function begin() {
           viewAllEmployees();
           break;
         case 'Add Department':
+          addDepartment();
           break;
         case 'Add Role':
           break;
@@ -52,10 +53,11 @@ function begin() {
 
 // query to 'View All Deparments' 
 const viewAllDepartments = () => {
-  db.query('SELECT * FROM department', (err, results) => {
+  db.query('SELECT department.id, department.department_name FROM department;', (err, results) => {
     if (err) {
       console.log(err);
     } else {
+      console.log('');
       console.table('Departments', results);
     }
     begin();
@@ -85,10 +87,6 @@ const viewAllEmployees = () => {
   });
 };
 
-
-
-
-
 // function to add employee with queries
 const addEmployee = () => {
   db.query('SELECT id AS value, title AS name FROM employee_role;', (err, role) => {
@@ -109,7 +107,7 @@ const addEmployee = () => {
         type: 'list',
         name: 'title',
         message: 'What is their job title?',
-        choices: role, {Name: 'None', value: 'NULL'}
+        choices: role
       },
       {
         type: 'list',
@@ -145,61 +143,36 @@ const addEmployee = () => {
       });
   });
 };
-// const addDepartment = () => {
-//   db.query('SELECT id AS value, title AS name FROM employee_role;', (err, role) => {
-//     console.log(role)
+// Function to add depatment
+const addDepartment = () => {
+  db.query('SELECT department.id, department.department_name FROM department;', (err, dep) => {
+    
+    const createDepartment = [
+      {
+        type: 'input',
+        name: 'departmentName',
+        message: 'What is the name of the department?',
+      },
+    ]
 
-//     const createEmployee = [
-//       {
-//         type: 'input',
-//         name: 'firstName',
-//         message: 'What is their first name?',
-//       },
-//       {
-//         type: 'input',
-//         name: 'lastName',
-//         message: 'What is their last name?',
-//       },
-//       {
-//         type: 'list',
-//         name: 'title',
-//         message: 'What is their job title?',
-//         choices: role,
-//       },
-//       {
-//         type: 'list',
-//         name: 'manager',
-//         message: 'Who is their manager?',
-//         choices: [
-//           { name: 'Julian Franklin', value: 7 },
-//           { name: 'Charli Dunlap', value: 5 },
-//           { name: 'Hunter Padgett', value: 3 },
-//           { name: 'Vince Yang', value: 1 }
-//         ]
-//       }
-//     ]
-
-//     inquirer
-//       .prompt(createEmployee).then(emp => {
-//         console.log(emp)
-//         db.query
-//           ('INSERT INTO employee SET ?', {
-//             first_name: emp.firstName,
-//             last_name: emp.lastName,
-//             role_id: emp.title,
-//             manager_id: emp.manager
-//           }, (err, results) => {
-//             if (err) {
-//               console.log(err)
-//             } else {
-//               console.log('Successfully added employee!');
-//               console.table(viewAllEmployees())
-//             }
-//             begin();
-//           });
-//       });
-//   });
-// };
+    inquirer
+      .prompt(createDepartment).then(depName => {
+        console.log(depName)
+        db.query
+          ('INSERT INTO department SET ?', {
+            department_name: depName.departmentName
+          }, (err, results) => {
+            if (err) {
+              console.log(err)
+            } else {
+              console.log('Successfully added new deparment!');
+              console.table(viewAllDepartments())
+            }
+            begin();
+          });
+      });
+  });
+};
 
 
 
