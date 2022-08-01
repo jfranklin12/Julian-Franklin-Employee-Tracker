@@ -55,7 +55,7 @@ function begin() {
         addEmployee();
         break;
       case 'Quit':
-        prompt.ui.close();
+        quit();
         break;
     }
   });
@@ -208,7 +208,7 @@ const addRole = () => {
           message: 'What is the name of the role?',
         },
         {
-          type: 'input',
+          type: 'number',
           name: 'roleSalary',
           message: 'What is the salary of the role?',
         },
@@ -243,16 +243,19 @@ const addRole = () => {
   );
 };
 
-// const quit = () => {
-//   const exit = [
-//     {
-//       type: 'confirm',
-//       name: 'exitProgram',
-//       message: 'Do you want to quit?',
-//       default: 'Y'
-//     }
-//   ]
-//   inquirer.prompt(exit).then((end) => {
-//     ui.close;
-// }
+const quit = () => {
+  const exit = [
+    {
+      type: 'confirm',
+      name: 'exitProgram',
+      message: 'Do you want to quit?',
+      default: 'Y'
+    }
+  ]
+  inquirer.prompt(exit).then((err, results) => {
+    console.log('Bye!');
+    process.exit(1);
+    
+});
+}
 begin();
