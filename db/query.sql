@@ -18,4 +18,6 @@ SELECT department.id, department.department_name FROM department;
 -- LEFT JOIN employee manager ON employee.manager_id = employee.manager_id;
 -- WHERE employee.manager_id = CONCAT(employee.first_name, ' ' ,employee.last_name);
 
-SELECT id, title, salary FROM employee_role;
+-- SELECT id, title, salary FROM employee_role;
+
+SELECT employee_role.id, employee_role.title, department.department_name AS department, employee_role.salary FROM employee_role JOIN department ON employee_role.department_id = department.id;

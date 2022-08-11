@@ -1,7 +1,6 @@
 const mysql = require('mysql2');
 const inquirer = require('inquirer');
 const cTable = require('console.table');
-const { restoreDefaultPrompts } = require('inquirer');
 
 // Connect to database
 const db = mysql.createConnection(
@@ -78,7 +77,7 @@ const viewAllDepartments = () => {
 };
 // query to 'View All Roles'
 const viewAllRoles = () => {
-  db.query('SELECT * FROM employee_role', (err, results) => {
+  db.query('SELECT employee_role.id, employee_role.title, department.department_name AS department, employee_role.salary FROM employee_role JOIN department ON employee_role.department_id = department.id;', (err, results) => {
     if (err) {
       console.log(err);
     } else {
@@ -136,12 +135,12 @@ const addEmployee = () => {
             { name: 'Charli Dunlap', value: 5 },
             { name: 'Hunter Padgett', value: 3 },
             { name: 'Vince Yang', value: 1 },
+            { name: 'none', value: null }
           ],
         },
       ];
 
       inquirer.prompt(createEmployee).then((emp) => {
-        // console.log(emp)
         db.query(
           'INSERT INTO employee SET ?',
           {
@@ -155,7 +154,6 @@ const addEmployee = () => {
               console.log(err);
             } else {
               console.log('Successfully added employee!');
-              // console.table(viewAllEmployees())
             }
             begin();
           }
